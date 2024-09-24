@@ -47,3 +47,12 @@ export const priceSchema = z.object({
 export const sectionSchema = z.object({
 	title: z.string().min(3),
 })
+
+export const lessonSchema = z.object({
+	title: z.string().min(3),
+	videoUrl: z.string().url(),
+	content: z.string(),
+	hours: z.string(),
+	minutes: z.string(),
+	seconds: z.string(),
+})

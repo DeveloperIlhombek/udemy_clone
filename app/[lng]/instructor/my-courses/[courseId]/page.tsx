@@ -2,7 +2,7 @@ import { getCourseById } from '@/actions/course.action'
 import Header from '../../_components/header'
 import Actions from './_components/actions'
 import { Separator } from '@/components/ui/separator'
-import { Gem, Images, LayoutPanelLeft, Settings } from 'lucide-react'
+import { Images, LayoutPanelLeft, Settings } from 'lucide-react'
 import CourseFields from './_components/course-fields'
 import Description from './_components/description'
 import Information from './_components/information'
@@ -42,6 +42,7 @@ async function Page({ params }: { params: { courseId: string } }) {
 					<Description {...course} />
 					<Information {...course} />
 					<SelectFields {...course} />
+					<Price {...course} />
 				</div>
 				<div className='flex flex-col space-y-2'>
 					{/* Sections */}
@@ -52,14 +53,7 @@ async function Page({ params }: { params: { courseId: string } }) {
 						<LayoutPanelLeft />
 					</div>
 					<Sections course={course} section={section} />
-					{/* Price */}
-					<div className='flex items-center gap-2'>
-						<span className='font-space-grotesk text-3xl font-medium'>
-							Course Price
-						</span>{' '}
-						<Gem />
-					</div>
-					<Price {...course} />
+
 					{/* Preview image */}
 					<div className='flex items-center gap-2'>
 						<span className='font-space-grotesk text-3xl font-medium'>

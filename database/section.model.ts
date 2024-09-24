@@ -5,6 +5,7 @@ const SectionSchema = new Schema(
 		title: String,
 		position: Number,
 		course: { type: Schema.Types.ObjectId, ref: 'Course' },
+		lessons: [{ type: Schema.Types.ObjectId, ref: 'Lesson' }],
 	},
 	{ timestamps: true }
 )

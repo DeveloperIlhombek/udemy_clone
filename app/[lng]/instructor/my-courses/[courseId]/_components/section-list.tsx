@@ -1,6 +1,9 @@
+'use client'
 import { ISection } from '@/app.types'
 import { Draggable } from '@hello-pangea/dnd'
-import { Grip, Pencil, Trash2 } from 'lucide-react'
+import { Grip, Pencil } from 'lucide-react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 interface Props {
 	section: ISection
@@ -8,6 +11,7 @@ interface Props {
 }
 
 function SectionList({ index, section }: Props) {
+	const pathname = usePathname()
 	return (
 		<Draggable draggableId={section._id} index={index}>
 			{provided => (
@@ -24,8 +28,9 @@ function SectionList({ index, section }: Props) {
 					</div>
 					<span>{section.title}</span>
 					<div className='ml-auto flex items-center gap-x-2 pr-2'>
-						<Pencil className='size-4 cursor-pointer transition hover:opacity-75' />
-						<Trash2 className='size-4 cursor-pointer transition hover:opacity-75' />
+						<Link href={`${pathname}/${section._id}`}>
+							<Pencil className='size-4 cursor-pointer transition hover:opacity-75' />
+						</Link>
 					</div>
 				</div>
 			)}

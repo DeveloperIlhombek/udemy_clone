@@ -42,3 +42,36 @@ export const updateSection = async (params: IUpdateSection) => {
 		throw new Error('Something went wrong!')
 	}
 }
+
+export const getSectionById = async (id: string) => {
+	try {
+		await connectToDatabase()
+		return Section.findById(id)
+	} catch (error) {
+		throw new Error('Something went wrong')
+	}
+}
+
+export const deleteSection = async (id: string, path: string) => {
+	try {
+		await connectToDatabase()
+		await Section.findByIdAndDelete(id)
+		revalidatePath(path)
+	} catch (error) {
+		throw new Error('Something went wrong while delete section')
+	}
+}
+
+export const updateSectionTitle = async (
+	id: string,
+	title: string,
+	path: string
+) => {
+	try {
+		await connectToDatabase()
+		await Section.findByIdAndUpdate(id, { title })
+		revalidatePath(path)
+	} catch (error) {
+		throw new Error('Something went wrong while updating section title')
+	}
+}
