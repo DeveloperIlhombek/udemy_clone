@@ -1,7 +1,5 @@
 'use client'
-
-import { useSearchParams } from 'next/navigation'
-import { useRouter } from 'next/router'
+import { useSearchParams, useRouter } from 'next/navigation'
 import { Button } from '../ui/button'
 import { formUrlQuery } from '@/lib/utils'
 
