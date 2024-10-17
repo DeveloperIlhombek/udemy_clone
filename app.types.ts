@@ -21,3 +21,34 @@ export interface ISection {
 	position: number
 	course: string
 }
+export interface ILesson {
+	_id: string
+	title: string
+	position: number
+	videoUrl: string
+	content: string
+	free: boolean
+	duration: {
+		hours: number
+		minutes: number
+		seconds: number
+	}
+}
+export interface IUser {
+	_id: string
+	clerkId: string
+	fullName: string
+	email: string
+	picture: string
+	role: string
+	bio: string
+	phone: string
+	job: string
+	website: string
+	linkedin: string
+	github: string
+	youtube: string
+}
+export interface SearchParamsProps {
+	searchParams: { [key: string]: string | undefined }
+}

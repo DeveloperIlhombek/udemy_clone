@@ -56,3 +56,13 @@ export const lessonSchema = z.object({
 	minutes: z.string(),
 	seconds: z.string(),
 })
+
+export const profileSchema = z.object({
+	bio: z.string().min(10).optional(),
+	phone: z.string().optional(),
+	job: z.string().min(3).optional(),
+	website: z.string().url().optional(),
+	linkedin: z.string().url().optional(),
+	github: z.string().url().optional(),
+	youtube: z.string().url().optional(),
+})

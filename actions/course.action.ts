@@ -1,9 +1,10 @@
 'use server'
+import { GetCourseParams, ICreateCourse } from './types.d'
 
 import Course from '@/database/course.model'
 import { connectToDatabase } from '@/lib/mongoose'
 import { revalidatePath } from 'next/cache'
-import { ICreateCourse } from './types'
+
 import { ICourse } from '@/app.types'
 import User from '@/database/user.model'
 
@@ -18,12 +19,20 @@ export const createCourse = async (data: ICreateCourse, clerkId: string) => {
 	}
 }
 
-export const getCourses = async (clerkId: string) => {
+export const getCourses = async (params: GetCourseParams) => {
 	try {
 		await connectToDatabase()
+		const { clerkId, page = 1, pageSize = 3 } = params
+		const skipAmount = (page - 1) * pageSize
 		const user = await User.findOne({ clerkId })
-		const courses = await Course.find({ instructor: user._id })
-		return courses as ICourse[]
+		const { _id } = user
+		const courses = await Course.find({ instructor: _id })
+			.skip(skipAmount)
+			.limit(pageSize)
+
+		const totolCources = await Course.find({ instructor: _id }).countDocuments()
+		const isNext = totolCources > skipAmount + courses.length
+		return { isNext, totolCources, courses }
 	} catch (error) {
 		throw new Error('Something went wrong while getting course!')
 	}
