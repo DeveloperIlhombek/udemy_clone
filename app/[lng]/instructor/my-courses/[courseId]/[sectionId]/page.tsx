@@ -7,6 +7,7 @@ import Link from 'next/link'
 import Action from './_components/action'
 import SectionField from './_components/section-field'
 import Lessons from './_components/lessons'
+import { getLessons } from '@/actions/lesson.action'
 
 interface Params {
 	params: {
@@ -17,7 +18,10 @@ interface Params {
 
 async function Page({ params }: Params) {
 	const sectionJSON = await getSectionById(params.sectionId)
+	const lessonsJson = await getLessons(params.sectionId)
+
 	const section = JSON.parse(JSON.stringify(sectionJSON))
+	const lessons = JSON.parse(JSON.stringify(lessonsJson))
 	return (
 		<>
 			<div className='flex items-center justify-between'>
@@ -43,7 +47,7 @@ async function Page({ params }: Params) {
 						</span>
 						<Settings2 />
 					</div>
-					<Lessons section={section} />
+					<Lessons section={section} lessons={lessons} />
 				</div>
 				<div className='flex flex-col space-y-2'>
 					<div className='flex items-center gap-2'>

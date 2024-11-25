@@ -11,6 +11,7 @@ const LessonSchema = new Schema({
 		seconds: { type: Number, default: 0 },
 	},
 	section: { type: Schema.Types.ObjectId, ref: 'Section' },
+	free: { type: Boolean, default: false },
 })
 
 const Lesson = models.Lesson || model('Lesson', LessonSchema)
