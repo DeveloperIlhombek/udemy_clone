@@ -1,12 +1,10 @@
 'use client'
+
+import { updateUser } from '@/actions/user.action'
 import { IUser } from '@/app.types'
+import FillLoading from '@/components/shared/fill-loading'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { profileSchema } from '@/lib/validation'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { usePathname } from 'next/navigation'
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 import {
 	Form,
 	FormControl,
@@ -15,21 +13,26 @@ import {
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form'
-import FillLoading from '@/components/shared/fill-loading'
 import { Input } from '@/components/ui/input'
-import { CandlestickChart, Github, Linkedin, Youtube } from 'lucide-react'
 import { Textarea } from '@/components/ui/textarea'
-import { Button } from '@/components/ui/button'
-import { updateUser } from '@/actions/user.action'
+import { profileSchema } from '@/lib/validation'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { CandlestickChart, Github, Linkedin, Youtube } from 'lucide-react'
+import { usePathname } from 'next/navigation'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import { z } from 'zod'
+
 function Account(user: IUser) {
 	const { bio, job, website, youtube, github, linkedin, phone } = user
+
 	const [isLoading, setIsLoading] = useState(false)
 	const pathname = usePathname()
 
 	const form = useForm<z.infer<typeof profileSchema>>({
 		resolver: zodResolver(profileSchema),
-		defaultValues: { bio, phone, github, job, linkedin, website, youtube },
+		defaultValues: { bio, job, website, youtube, github, linkedin, phone },
 	})
 
 	function onSubmit(values: z.infer<typeof profileSchema>) {
