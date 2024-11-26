@@ -1,5 +1,5 @@
 'use server'
-import { GetCourseParams, ICreateCourse } from './types.d'
+import { GetCoursesParams, ICreateCourse } from './types.d'
 
 import Course from '@/database/course.model'
 import { connectToDatabase } from '@/lib/mongoose'
@@ -19,7 +19,7 @@ export const createCourse = async (data: ICreateCourse, clerkId: string) => {
 	}
 }
 
-export const getCourses = async (params: GetCourseParams) => {
+export const getCourses = async (params: GetCoursesParams) => {
 	try {
 		await connectToDatabase()
 		const { clerkId, page = 1, pageSize = 3 } = params
