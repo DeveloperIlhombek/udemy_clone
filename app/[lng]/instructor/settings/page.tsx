@@ -17,8 +17,18 @@ async function Page() {
 			<Separator className='my-3 bg-muted-foreground' />
 			<Tabs defaultValue='profile'>
 				<TabsList className='flex items-center justify-start gap-2'>
-					<TabsTrigger value='profile'>Profile</TabsTrigger>
-					<TabsTrigger value='account'>Account</TabsTrigger>
+					<TabsTrigger
+						value='profile'
+						className='rounded-sm border border-blue-300 bg-white px-3 py-1 text-blue-500 hover:bg-blue-500 hover:text-white dark:bg-black dark:hover:bg-blue-500 dark:hover:text-white'
+					>
+						Profile
+					</TabsTrigger>
+					<TabsTrigger
+						value='account'
+						className='rounded-sm border border-blue-300 bg-white px-3 py-1 text-blue-500 hover:bg-blue-500 hover:text-white dark:bg-black dark:hover:bg-blue-500 dark:hover:text-white'
+					>
+						Account
+					</TabsTrigger>
 				</TabsList>
 				<TabsContent value='profile'>
 					<Profile />

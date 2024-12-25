@@ -162,7 +162,7 @@ function Account(user: IUser) {
 								name='youtube'
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Yuutube</FormLabel>
+										<FormLabel>Youtube</FormLabel>
 										<FormControl>
 											<div className='flex items-center bg-secondary pr-2'>
 												<Input

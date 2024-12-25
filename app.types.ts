@@ -13,6 +13,7 @@ export interface ICourse {
 	published: boolean
 	slug: string
 	tags: string
+	instructor: IUser
 }
 
 export interface ISection {

@@ -3,12 +3,17 @@ import FeaturedCourses from './_components/featured-courses'
 import Hero from './_components/hero'
 import Instructor from './_components/instructor'
 import LearningJourney from './_components/learning-journey'
+import { getFeaturedCourses } from '@/actions/course.action'
+async function Page() {
+	const coursesJSON = await getFeaturedCourses()
 
-function Page() {
+	const courses = JSON.parse(JSON.stringify(coursesJSON))
+	console.log(coursesJSON)
+
 	return (
 		<>
 			<Hero />
-			<FeaturedCourses />
+			<FeaturedCourses courses={courses} />
 			<Categories />
 			<Instructor />
 			<LearningJourney />
