@@ -92,3 +92,20 @@ export const calculateTotalDuration = (lessons: ILesson[]) => {
 
 	return formattedTotalDuration
 }
+
+export const formatLessonTime = (lesson: ILesson) => {
+	const duration = lesson.duration
+
+	const totalSeconds =
+		duration.hours * 3600 + duration.minutes * 60 + duration.seconds
+
+	const hours = Math.floor(totalSeconds / 3600)
+	const minutes = Math.floor((totalSeconds % 3600) / 60)
+	const seconds = totalSeconds % 60
+
+	const formattedTime = `${hours > 0 ? hours + ':' : ''}${
+		minutes > 0 ? minutes + ':' : ''
+	}${seconds.toString().padStart(2, '0')}`
+
+	return formattedTime
+}
