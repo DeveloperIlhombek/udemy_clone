@@ -5,9 +5,12 @@ import Course from '@/database/course.model'
 import { connectToDatabase } from '@/lib/mongoose'
 import { revalidatePath } from 'next/cache'
 
-import { ICourse } from '@/app.types'
+import { ICourse, ILesson } from '@/app.types'
 import User from '@/database/user.model'
 import { cache } from 'react'
+import Section from '@/database/section.model'
+import Lesson from '@/database/lesson.model'
+import { calculateTotalDuration } from '@/lib/utils'
 
 export const createCourse = async (data: ICreateCourse, clerkId: string) => {
 	try {
@@ -92,38 +95,38 @@ export const getFeaturedCourses = cache(async () => {
 	}
 })
 
-// export const getDetailedCourse = cache(async (id: string) => {
-// 	try {
-// 		await connectToDatabase()
+export const getDetailedCourse = cache(async (id: string) => {
+	try {
+		await connectToDatabase()
 
-// 		const course = await Course.findById(id)
-// 			.select(
-// 				'title description instructor previewImage oldPrice currentPrice learning requirements tags updatedAt level category language'
-// 			)
-// 			.populate({
-// 				path: 'instructor',
-// 				select: 'fullName picture',
-// 				model: User,
-// 			})
+		const course = await Course.findById(id)
+			.select(
+				'title description instructor previewImage oldPrice currentPrice learning requirements tags updatedAt level category language'
+			)
+			.populate({
+				path: 'instructor',
+				select: 'fullName picture',
+				model: User,
+			})
 
-// 		const sections = await Section.find({ course: id }).populate({
-// 			path: 'lessons',
-// 			model: Lesson,
-// 		})
+		const sections = await Section.find({ course: id }).populate({
+			path: 'lessons',
+			model: Lesson,
+		})
 
-// 		const totalLessons: ILesson[] = sections
-// 			.map(section => section.lessons)
-// 			.flat()
+		const totalLessons: ILesson[] = sections
+			.map(section => section.lessons)
+			.flat()
 
-// 		const data = {
-// 			...course._doc,
-// 			totalLessons: totalLessons.length,
-// 			totalSections: sections.length,
-// 			totalDuration: calculateTotalDuration(totalLessons),
-// 		}
+		const data = {
+			...course._doc,
+			totalLessons: totalLessons.length,
+			totalSections: sections.length,
+			totalDuration: calculateTotalDuration(totalLessons),
+		}
 
-// 		return data
-// 	} catch (error) {
-// 		throw new Error('Something went wrong while getting detailed course!')
-// 	}
-// })
+		return data
+	} catch (error) {
+		throw new Error('Something went wrong while getting detailed course!')
+	}
+})

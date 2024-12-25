@@ -6,9 +6,7 @@ import LearningJourney from './_components/learning-journey'
 import { getFeaturedCourses } from '@/actions/course.action'
 async function Page() {
 	const coursesJSON = await getFeaturedCourses()
-
 	const courses = JSON.parse(JSON.stringify(coursesJSON))
-	console.log(coursesJSON)
 
 	return (
 		<>

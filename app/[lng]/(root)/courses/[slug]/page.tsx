@@ -1,22 +1,25 @@
 import TopBar from '@/components/shared/top-bar'
-import { Separator } from '@/components/ui/separator'
-import {
-	Carousel,
-	CarouselContent,
-	CarouselItem,
-	CarouselNext,
-	CarouselPrevious,
-} from '@/components/ui/carousel'
-import { courses } from '@/constants'
-import CourseCard from '@/components/cards/course.card'
-import { translation } from '@/i18n/server'
-import { LngParams } from '@/types'
 import Hero from './_components/hero'
 import Overview from './_components/overview'
 import Description from './_components/description'
+import { Separator } from '@/components/ui/separator'
+import { translation } from '@/i18n/server'
+import { getDetailedCourse } from '@/actions/course.action'
 
-async function Page({ params: { lng } }: LngParams) {
+interface Props {
+	params: {
+		lng: string
+		slug: string
+	}
+}
+
+async function Page({ params: { lng, slug } }: Props) {
 	const { t } = await translation(lng)
+
+	const courseJSON = await getDetailedCourse(slug)
+
+	console.log(courseJSON)
+	const course = JSON.parse(JSON.stringify(courseJSON))
 
 	return (
 		<>
@@ -25,11 +28,11 @@ async function Page({ params: { lng } }: LngParams) {
 			<div className='container mx-auto max-w-6xl'>
 				<div className='grid grid-cols-3 gap-4 pt-12'>
 					<div className='col-span-2 max-lg:col-span-3'>
-						<Hero />
-						<Overview />
+						<Hero {...course} />
+						<Overview {...course} />
 					</div>
 					<div className='col-span-1 max-lg:col-span-3'>
-						<Description />
+						<Description {...course} />
 					</div>
 				</div>
 
@@ -39,7 +42,7 @@ async function Page({ params: { lng } }: LngParams) {
 					{t('youMayLike')}
 				</h1>
 
-				<Carousel opts={{ align: 'start' }} className='mt-6 w-full'>
+				{/* <Carousel opts={{ align: 'start' }} className='mt-6 w-full'>
 					<CarouselContent className='w-full'>
 						{courses.map(course => (
 							<CarouselItem
@@ -52,7 +55,7 @@ async function Page({ params: { lng } }: LngParams) {
 					</CarouselContent>
 					<CarouselPrevious />
 					<CarouselNext />
-				</Carousel>
+				</Carousel> */}
 			</div>
 		</>
 	)

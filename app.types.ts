@@ -14,6 +14,10 @@ export interface ICourse {
 	slug: string
 	tags: string
 	instructor: IUser
+	updatedAt: string
+	totalLessons: number
+	totalSections: number
+	totalDuration: string
 }
 
 export interface ISection {

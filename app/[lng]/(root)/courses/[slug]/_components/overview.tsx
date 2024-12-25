@@ -1,5 +1,6 @@
 'use client'
 
+import { ICourse } from '@/app.types'
 import ReviewCard from '@/components/cards/review.card'
 import {
 	Accordion,
@@ -19,7 +20,7 @@ import {
 	Star,
 } from 'lucide-react'
 
-function Overview() {
+function Overview(course: ICourse) {
 	const t = useTranslate()
 
 	return (
@@ -30,7 +31,7 @@ function Overview() {
 				</h2>
 
 				<div className='mt-5 grid grid-cols-1 gap-4 md:grid-cols-2'>
-					{learn.split(', ').map(item => (
+					{course.learning.split(', ').map(item => (
 						<div className={'flex gap-2'} key={item}>
 							<BadgeCheck className='size-5 text-blue-500' />
 							<p className='flex-1'>{item}</p>
@@ -50,7 +51,7 @@ function Overview() {
 						<p className='font-space-grotesk text-xl font-bold'>
 							{t('numberOfModules')}
 						</p>
-						<div className='text-2xl font-medium'>4</div>
+						<div className='text-2xl font-medium'>{course.totalSections}</div>
 					</div>
 
 					<div className='flex flex-col'>
@@ -58,7 +59,7 @@ function Overview() {
 						<p className='font-space-grotesk text-xl font-bold'>
 							{t('numberOfLessons')}
 						</p>
-						<div className='text-2xl font-medium'>90 ta</div>
+						<div className='text-2xl font-medium'>{course.totalLessons}</div>
 					</div>
 
 					<div className='flex flex-col '>
@@ -67,7 +68,8 @@ function Overview() {
 							{t('courseDuration')}
 						</p>
 						<div className='text-2xl font-medium'>
-							20 {t('hours')} 40 {t('minutes')}
+							{course.totalDuration.split('.')[0]} {t('hours')}{' '}
+							{course.totalDuration.split('.')[1]} {t('minutes')}
 						</div>
 					</div>
 				</div>
@@ -86,11 +88,11 @@ function Overview() {
 
 			<div className='mt-8 rounded-md bg-secondary p-4 lg:p-6'>
 				<h2 className='font-space-grotesk text-3xl font-bold'>
-					{t('courseForWhom')}
+					{t('requirements')}
 				</h2>
 
 				<div className='mt-2'>
-					{forWhom.split(', ').map(i => (
+					{course.requirements.split(', ').map(i => (
 						<div className='mt-1 flex items-center' key={i}>
 							<Dot />
 							<p className='flex-1 text-slate-400'>{i}</p>
@@ -132,7 +134,3 @@ function Overview() {
 }
 
 export default Overview
-
-const learn = 'JavaScript, AJAX, Algoritm, Promise, Git va Github, JSON-Server'
-const forWhom =
-	"Dasturlashga qiziqish borlar, JavaScript dasturlash tilini o'rganish istagi, Amaliy loyihalar qilish"

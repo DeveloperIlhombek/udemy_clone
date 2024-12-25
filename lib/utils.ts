@@ -3,6 +3,7 @@ import { twMerge } from 'tailwind-merge'
 import { enUS, ruRU, trTR } from '@clerk/localizations'
 import { uzUZ } from './uz-UZ'
 import qs from 'query-string'
+import { ILesson } from '@/app.types'
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
 }
@@ -70,4 +71,24 @@ export const formUrlQuery = ({ key, value, params }: UrlQueryParams) => {
 		},
 		{ skipNull: true }
 	)
+}
+
+export const calculateTotalDuration = (lessons: ILesson[]) => {
+	let totalMinutes = 0
+
+	lessons.forEach(lesson => {
+		totalMinutes +=
+			lesson.duration.hours * 60 +
+			lesson.duration.minutes +
+			Math.round(lesson.duration.seconds / 60)
+	})
+
+	const totalHours = Math.floor(totalMinutes / 60)
+	const remainingMinutes = totalMinutes % 60
+
+	const formattedTotalDuration = `${totalHours}.${remainingMinutes
+		.toString()
+		.padStart(2, '0')}`
+
+	return formattedTotalDuration
 }
