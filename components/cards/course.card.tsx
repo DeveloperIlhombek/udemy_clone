@@ -6,7 +6,7 @@ import { ICourse } from '@/app.types'
 
 function CourseCard(course: ICourse) {
 	return (
-		<Link href={`/courses/${course._id}`}>
+		<Link href={`/course/${course._id}`}>
 			<Card className='group w-full'>
 				<CardContent className='relative h-56 w-full'>
 					<Image
