@@ -2,6 +2,7 @@
 
 import { ICourse } from '@/app.types'
 import CourseCard from '@/components/cards/course.card'
+import NoResult from '@/components/shared/no-result'
 import Pagination from '@/components/shared/pagination'
 import {
 	Select,
@@ -100,6 +101,13 @@ function AllCourses({ result }: Props) {
 					<CourseCard key={index} {...course} />
 				))}
 			</div>
+
+			{courses.length === 0 && (
+				<NoResult
+					title="Ko'rsatish uchun hech qanday kurslar yo'q"
+					description="O'zingizga mos kurslarni toping! 🚀 Xozirda sizning so'rovingizga to'g'ri keladigon kurslar bizda mavjud emass. Tez kunda qo'shiladi! 💡"
+				/>
+			)}
 
 			<div className='mt-10'>
 				<Pagination pageNumber={page ? +page : 1} isNext={isNext} />
