@@ -85,5 +85,17 @@
 	"numberOfModules": "Modül sayısı",
 	"numberOfLessons": "Ders sayısı",
 	"courseDuration": "Kurs süresi",
-	"youMayLike": "Beğenebilirsin"
+	"youMayLike": "Beğenebilirsin",
+	"category": "Kategori",
+	"requirements": "Gereksinimler",
+	"loadMore": "Daha Fazla Yükle",
+	"completed": "Tamamlandı",
+	"evaluation": "Değerlendirme",
+	"favouriteCourse": "Bu kursu favorilere ekle",
+	"archiveCourse": "Bu kursu arşivle",
+	"share": "Arkadaşlarla paylaş",
+	"shareCourse": "Bu platformu desteklemek için görüşlerinizi bildirin ve arkadaşlarınızla paylaşın",
+	"completeLesson": "Bu dersi tamamla",
+	"usefullInformation": "Yararlı Bilgiler",
+	"typeToSearch": "Aramak için yazın..."
 }

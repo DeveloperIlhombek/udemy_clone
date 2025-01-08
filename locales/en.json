@@ -85,5 +85,17 @@
 	"numberOfModules": "Modules",
 	"numberOfLessons": "Lessons",
 	"courseDuration": "Course duration",
-	"youMayLike": "You May Like"
+	"youMayLike": "You May Like",
+	"category": "Category",
+	"requirements": "Requirements",
+	"loadMore": "Load More",
+	"completed": "Completed",
+	"evaluation": "Evaluation",
+	"favouriteCourse": "Favourite this course",
+	"archiveCourse": "Archive this course",
+	"share": "Share with friends",
+	"shareCourse": "Ushbu platformani qo'llab-quvvatlash uchun o'z fikringizni bildiring va do'stlaringizga ulashing",
+	"completeLesson": "Complete this lesson",
+	"usefullInformation": "Usefull Information",
+	"typeToSearch": "Type to search..."
 }

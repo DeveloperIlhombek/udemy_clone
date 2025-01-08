@@ -85,5 +85,17 @@
 	"numberOfModules": "Модулей",
 	"numberOfLessons": "Уроков",
 	"courseDuration": "Длительность курса",
-	"youMayLike": "Вам может понравиться"
+	"youMayLike": "Вам может понравиться",
+	"category": "Категория",
+	"requirements": "Требования",
+	"loadMore": "Загрузить еще",
+	"completed": "Завершено",
+	"evaluation": "Оценка",
+	"favouriteCourse": "Добавить этот курс в избранное",
+	"archiveCourse": "Архивировать этот курс",
+	"share": "Поделиться с друзьями",
+	"shareCourse": "Оставьте свой отзыв о этом курсе и поделитесь им с друзьями для поддержки этой платформы",
+	"completeLesson": "Завершить этот урок",
+	"usefullInformation": "Полезная информация",
+	"typeToSearch": "Введите для поиска..."
 }

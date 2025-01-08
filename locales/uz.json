@@ -85,5 +85,17 @@
 	"numberOfModules": "Modullar soni",
 	"numberOfLessons": "Darslar soni",
 	"courseDuration": "Kurs davomiyligi",
-	"youMayLike": "Sizga Yoqishi mumkin"
+	"youMayLike": "Sizga Yoqishi mumkin",
+	"category": "Kategoriya",
+	"requirements": "Talablar",
+	"loadMore": "Yana yuklash",
+	"completed": "Tugallandi",
+	"evaluation": "Baholash",
+	"favouriteCourse": "Bu kursni sevimlilarimizga qo'shing",
+	"archiveCourse": "Ushbu kursni arxivlang",
+	"share": "Do'stlar bilan ulashish",
+	"shareCourse": "Ushbu kurs haqida fikringizni ulashing va do'stlaringiz bilan ulashing",
+	"completeLesson": "Ushbu darsni tugatish",
+	"usefullInformation": "Foydali ma'lumotlar",
+	"typeToSearch": "Qidirish uchun yozing..."
 }
