@@ -2,6 +2,7 @@
 
 import { completeLesson, uncompleteLesson } from '@/actions/lesson.action'
 import { ILesson, ISection } from '@/app.types'
+import SectionLoading from '@/components/shared/section-loading'
 import {
 	Accordion,
 	AccordionContent,
@@ -27,6 +28,8 @@ interface Props {
 	sections: ISection[]
 }
 function Sections({ sections }: Props) {
+	const [mount, setMount] = useState(false)
+
 	const searchParams = useSearchParams()
 	const router = useRouter()
 	const pathname = usePathname()
@@ -48,18 +51,31 @@ function Sections({ sections }: Props) {
 		router.push(`${pathname}${query}`)
 	}
 
-	return (
+	useEffect(() => {
+		if (sectionId) {
+			setMount(true)
+		}
+	}, [sectionId])
+
+	return mount ? (
 		<Accordion
 			type='single'
 			collapsible
 			className='mt-1'
 			defaultValue={sectionId!}
+			value={sectionId!}
 			onValueChange={onSelect}
 		>
 			{sections.map(section => (
 				<SectionList key={section._id} {...section} />
 			))}
 		</Accordion>
+	) : (
+		<div className='mt-4 flex flex-col space-y-2'>
+			{Array.from({ length: sections.length }).map((_, i) => (
+				<SectionLoading key={i} />
+			))}
+		</div>
 	)
 }
 

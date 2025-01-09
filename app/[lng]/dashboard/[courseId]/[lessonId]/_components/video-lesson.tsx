@@ -1,21 +1,17 @@
-/* eslint-disable no-unused-vars */
 'use client'
 
 import { ILesson } from '@/app.types'
 import useTranslate from '@/hooks/use-translate'
 import { useAuth } from '@clerk/nextjs'
-import {
-	useParams,
-	usePathname,
-	useRouter,
-	useSearchParams,
-} from 'next/navigation'
+import { useParams, usePathname, useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import Vimeo from '@vimeo/player'
 import { Skeleton } from '@/components/ui/skeleton'
 import { CheckCircle, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { completeLesson, getNextLesson } from '@/actions/lesson.action'
+import { toast } from 'sonner'
 
 interface Props {
 	lesson: ILesson
@@ -28,10 +24,7 @@ function VideoLesson({ lesson }: Props) {
 	const router = useRouter()
 	const pathname = usePathname()
 	const { userId } = useAuth()
-	const searchParams = useSearchParams()
 	const t = useTranslate()
-
-	const sectionId = searchParams.get('s')
 
 	useEffect(() => {
 		if (vimeoPlayerRef.current) {
@@ -42,10 +35,29 @@ function VideoLesson({ lesson }: Props) {
 			})
 
 			player.ready().then(() => setIsLoading(false))
+
+			player.on('ended', onEnd)
 		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [lesson, pathname])
 
-	const onEnd = async () => {}
+	const onEnd = async () => {
+		setIsLoading(true)
+
+		const nextLesson = getNextLesson(lesson._id, `${courseId}`).then(res =>
+			router.push(`/dashboard/${courseId}/${res?.lessonId}?s=${res?.sectionId}`)
+		)
+		const completed = completeLesson(lesson._id, userId!, pathname)
+
+		const promise = Promise.all([nextLesson, completed])
+
+		toast.promise(promise, {
+			loading: t('loading'),
+			success: t('successfully'),
+			error: t('error'),
+		})
+	}
 
 	return (
 		<>
@@ -66,7 +78,7 @@ function VideoLesson({ lesson }: Props) {
 				<h2 className='mt-4 font-space-grotesk text-2xl font-bold'>
 					{lesson.title}
 				</h2>
-				<Button disabled={isLoading}>
+				<Button disabled={isLoading} onClick={onEnd}>
 					<span className='pr-2'>{t('completeLesson')}</span>
 					<CheckCircle size={18} />
 				</Button>
