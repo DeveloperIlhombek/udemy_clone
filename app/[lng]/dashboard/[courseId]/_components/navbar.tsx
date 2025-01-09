@@ -11,8 +11,10 @@ import {
 import useTranslate from '@/hooks/use-translate'
 import { MoreVertical, Star } from 'lucide-react'
 import DropdownContent from './dropdown-content'
+import { useReview } from '@/hooks/use-review'
 
 function Navbar() {
+	const { onOpen } = useReview()
 	const t = useTranslate()
 
 	return (
@@ -25,6 +27,7 @@ function Navbar() {
 				<div
 					className='hidden cursor-pointer items-center gap-1 opacity-50 transition-all duration-200 hover:opacity-100 md:flex'
 					role='button'
+					onClick={onOpen}
 				>
 					<Star size={20} />
 					<p>{t('evaluation')}</p>

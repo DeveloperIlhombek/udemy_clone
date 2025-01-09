@@ -64,3 +64,13 @@ export interface IUser {
 export interface SearchParamsProps {
 	searchParams: { [key: string]: string | undefined }
 }
+
+export interface IReview {
+	data: string
+	rating: number
+	user: IUser
+	createdAt: string
+	_id: string
+	course: ICourse
+	isFlag: boolean
+}
