@@ -19,6 +19,8 @@ import SectionList from './section-list'
 import SectionLoading from '@/components/shared/section-loading'
 import { getCourseReviews } from '@/actions/review.action'
 import AllReviews from './all-reviews'
+import NoResult from '@/components/shared/no-result'
+import ReviewLoading from '@/components/shared/review-loading'
 
 function Overview(course: ICourse) {
 	const [isLoading, setIsLoading] = useState(true)
@@ -129,7 +131,9 @@ function Overview(course: ICourse) {
 				</div>
 			</div>
 
-			{reviews.length ? (
+			{isLoading ? (
+				<ReviewLoading />
+			) : reviews.length ? (
 				<div className='mt-8 flex flex-col pb-20'>
 					<div className='mt-6 flex items-center gap-1 font-space-grotesk text-xl'>
 						<Star className='fill-[#DD6B20] text-[#DD6B20]' />
@@ -152,7 +156,12 @@ function Overview(course: ICourse) {
 
 					{course.reviewCount > 6 && <AllReviews {...course} />}
 				</div>
-			) : null}
+			) : (
+				<NoResult
+					title={t('noReviews')}
+					description={t('noReviewsDescription')}
+				/>
+			)}
 		</>
 	)
 }

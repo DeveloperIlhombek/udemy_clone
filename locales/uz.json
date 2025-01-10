@@ -97,5 +97,18 @@
 	"shareCourse": "Ushbu kurs haqida fikringizni ulashing va do'stlaringiz bilan ulashing",
 	"completeLesson": "Ushbu darsni tugatish",
 	"usefullInformation": "Foydali ma'lumotlar",
-	"typeToSearch": "Qidirish uchun yozing..."
+	"typeToSearch": "Qidirish uchun yozing...",
+	"noReviews": "Ko'rsatish uchun hech qanday sharhlar mavjud emas",
+	"noReviewsDescription": "Ushbu kurs uchun ko'rsatish uchun hech qanday sharhlar mavjud emas. 🚀 Ushbu kursga birinchi sharhni qoldiring. Har bir aloqa biz uchun muhim! 💡",
+	"noCourses": "Ko'rsatish uchun hech qanday kurslar yo'q",
+	"noCourseDescription": "Sizga mos kurslarni toping! 🚀 Biz hozircha so'rovlaringizga mos keladigan hech qanday kursimiz yo'q. Tez orada qo'shiladi! 💡",
+	"changeReview": "Fikringizni o'zgartirib, ushbu kursni baholashingiz mumkin",
+	"whyReview": "Nega reyting bergansiz?",
+	"rateCourse": "Ushbu kursni qanday baholayapsiz?",
+	"reviewPlaceholder": "Ushbu kurs haqida fikrlaringizni qoldiring. U sizga mos keladimi?",
+	"submit": "Jo'natish",
+	"change": "Tahrirlash",
+	"alreadyAdded": "Kurs allaqachon qo'shilgan",
+	"copied": "Havola ko'chirildi",
+	"ago": "avval"
 }

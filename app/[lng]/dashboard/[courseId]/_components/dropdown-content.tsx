@@ -21,9 +21,7 @@ function DropdownContent() {
 	const onCopy = () => {
 		const link = process.env.NEXT_PUBLIC_BASE_URL + pathname
 
-		navigator.clipboard
-			.writeText(link)
-			.then(() => toast.success('Link copied to clipboard'))
+		navigator.clipboard.writeText(link).then(() => toast.success(t('copied')))
 	}
 
 	const onAdd = (type: 'favourite' | 'archive') => {
@@ -36,9 +34,9 @@ function DropdownContent() {
 		}
 
 		toast.promise(promise, {
-			loading: 'Loading...',
-			success: 'Successfully added!',
-			error: 'Course already added to ' + type + '!',
+			loading: t('loading'),
+			success: t('successfully'),
+			error: `${t('alreadyAdded')}!`,
 		})
 	}
 

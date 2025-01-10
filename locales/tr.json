@@ -97,5 +97,18 @@
 	"shareCourse": "Bu platformu desteklemek için görüşlerinizi bildirin ve arkadaşlarınızla paylaşın",
 	"completeLesson": "Bu dersi tamamla",
 	"usefullInformation": "Yararlı Bilgiler",
-	"typeToSearch": "Aramak için yazın..."
+	"typeToSearch": "Aramak için yazın...",
+	"noReviews": "Gösterilecek bir değerlendirme yok",
+	"noReviewsDescription": "Bu kurs için gösterilecek bir değerlendirme yok. 🚀 Bu kurs için ilk değerlendirmeyi siz yapın. Her ilişki bizim için önemlidir! 💡",
+	"noCourses": "Gösterilecek kurs yok",
+	"noCourseDescription": "Size uygun kursları bulun! 🚀 Şu anda isteğinize uygun herhangi bir kursumuz bulunmuyor. Yakında eklenecek! 💡",
+	"changeReview": "Fikrinizi değiştirerek bu kursu değerlendirebilirsiniz",
+	"whyReview": "Neden değerlendirme yaptınız?",
+	"rateCourse": "Bu kursu nasıl değerlendirirsiniz?",
+	"reviewPlaceholder": "Bu kurs hakkında ne düşündüğünüzü bize söyleyin. Size uygun muydu?",
+	"submit": "Gönder",
+	"change": "Düzenle",
+	"alreadyAdded": "Kurs zaten eklenmiş",
+	"copied": "Bağlantı panoya kopyalandı",
+	"ago": "önce"
 }

@@ -97,5 +97,18 @@
 	"shareCourse": "Ushbu platformani qo'llab-quvvatlash uchun o'z fikringizni bildiring va do'stlaringizga ulashing",
 	"completeLesson": "Complete this lesson",
 	"usefullInformation": "Usefull Information",
-	"typeToSearch": "Type to search..."
+	"typeToSearch": "Type to search...",
+	"noReviews": "There are no reviews to show",
+	"noReviewsDescription": "There are no reviews to show for this course. 🚀 Be the first to review this course. Every relationship is important to us! 💡",
+	"noCourses": "There are no courses to show",
+	"noCourseDescription": "Find the courses that suit you! 🚀 We currently do not have any courses that match your request. Will be added soon! 💡",
+	"changeReview": "You can change your mind and review this course",
+	"whyReview": "Why did you rate it?",
+	"rateCourse": "How would you rate this course?",
+	"reviewPlaceholder": "Tell us what you think about this course. Did it suit you?",
+	"submit": "Submit",
+	"change": "Edit",
+	"alreadyAdded": "Course already added to",
+	"copied": "Link copied to clipboard",
+	"ago": "ago"
 }

@@ -4,8 +4,14 @@ import ReactStars from 'react-stars'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { IReview } from '@/app.types'
 import { formatDistanceToNow } from 'date-fns'
+import { useParams } from 'next/navigation'
+import { getTimeLocale } from '@/lib/utils'
+import useTranslate from '@/hooks/use-translate'
 
 function ReviewCard({ review }: { review: IReview }) {
+	const { lng } = useParams()
+	const t = useTranslate()
+
 	return (
 		<div className='mt-6 border-t border-t-secondary'>
 			<div className='mt-8 flex gap-2'>
@@ -21,7 +27,10 @@ function ReviewCard({ review }: { review: IReview }) {
 					<div className='flex items-center gap-1'>
 						<ReactStars value={review.rating} edit={false} color2='#DD6B20' />
 						<p className='text-sm opacity-50'>
-							{formatDistanceToNow(new Date(review.createdAt))} ago
+							{formatDistanceToNow(new Date(review.createdAt), {
+								locale: getTimeLocale(`${lng}`),
+							})}{' '}
+							{t('ago')}
 						</p>
 					</div>
 				</div>
