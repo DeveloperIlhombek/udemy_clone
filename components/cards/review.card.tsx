@@ -2,30 +2,32 @@
 
 import ReactStars from 'react-stars'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { IReview } from '@/app.types'
+import { formatDistanceToNow } from 'date-fns'
 
-function ReviewCard() {
+function ReviewCard({ review }: { review: IReview }) {
 	return (
 		<div className='mt-6 border-t border-t-secondary'>
 			<div className='mt-8 flex gap-2'>
 				<Avatar>
-					<AvatarImage
-						src={
-							'https://blog.sammi.app/_next/image?url=https%3A%2F%2Fmedia.graphassets.com%2FmhvJXIm9QuykyIp3bm4Q&w=3840&q=75'
-						}
-					/>
-					<AvatarFallback className='uppercase'>SB</AvatarFallback>
+					<AvatarImage src={review.user.picture} />
+					<AvatarFallback className='uppercase'>
+						{review.user.fullName[0]}
+					</AvatarFallback>
 				</Avatar>
 
 				<div className='flex flex-col'>
-					<div>John Doe</div>
+					<div>{review.user.fullName}</div>
 					<div className='flex items-center gap-1'>
-						<ReactStars value={4.5} edit={false} color2='#DD6B20' />
-						<p className='text-sm opacity-50'>5 minut oldin</p>
+						<ReactStars value={review.rating} edit={false} color2='#DD6B20' />
+						<p className='text-sm opacity-50'>
+							{formatDistanceToNow(new Date(review.createdAt))} ago
+						</p>
 					</div>
 				</div>
 			</div>
 
-			<div className='mt-2'>Kurs prosta bomba 🔥</div>
+			<div className='mt-2'>{review.data}</div>
 		</div>
 	)
 }

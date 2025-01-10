@@ -63,3 +63,9 @@ export interface GetAllCoursesParams {
 	searchQuery?: string
 	filter?: string
 }
+
+export interface GetReviewParams {
+	clerkId: string
+	page?: number
+	pageSize?: number
+}

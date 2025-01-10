@@ -1,8 +1,18 @@
 import { Separator } from '@/components/ui/separator'
 import Header from '../_components/header'
 import InstructorReviewCard from '@/components/cards/instructor-review.card'
+import { auth } from '@clerk/nextjs'
+import { SearchParamsProps } from '@/app.types'
+import { getReviews } from '@/actions/review.action'
+import Pagination from '@/components/shared/pagination'
 
-function Page() {
+async function Page({ searchParams }: SearchParamsProps) {
+	const { userId } = auth()
+
+	const page = searchParams.page ? +searchParams.page : 1
+
+	const result = await getReviews({ clerkId: userId!, page, pageSize: 6 })
+
 	return (
 		<>
 			<Header
@@ -15,9 +25,16 @@ function Page() {
 				<Separator className='my-3' />
 
 				<div className='flex flex-col space-y-3'>
-					<InstructorReviewCard />
-					<InstructorReviewCard />
-					<InstructorReviewCard />
+					{result.reviews.map(review => (
+						<InstructorReviewCard
+							key={review._id}
+							review={JSON.parse(JSON.stringify(review))}
+						/>
+					))}
+				</div>
+
+				<div className='mt-6'>
+					<Pagination isNext={result.isNext} pageNumber={page} />
 				</div>
 			</div>
 		</>
