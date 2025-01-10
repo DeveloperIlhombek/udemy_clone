@@ -14,6 +14,7 @@ import { calculateTotalDuration } from '@/lib/utils'
 import { FilterQuery } from 'mongoose'
 import Purchase from '@/database/purchase.model'
 import UserProgress from '@/database/user-progress.model'
+import Review from '@/database/review.model'
 
 export const createCourse = async (data: ICreateCourse, clerkId: string) => {
 	try {
@@ -147,11 +148,26 @@ export const getDetailedCourse = cache(async (id: string) => {
 			.map(section => section.lessons)
 			.flat()
 
+		const reviews = await Review.find({ course: id, isFlag: false }).select(
+			'rating'
+		)
+
+		const rating = reviews.reduce((total, review) => total + review.rating, 0)
+
+		const purchasedStudents = await Purchase.find({
+			course: id,
+		}).countDocuments()
+
+		const calcRating = (rating / reviews.length).toFixed(1)
+
 		const data = {
 			...course._doc,
 			totalLessons: totalLessons.length,
 			totalSections: sections.length,
 			totalDuration: calculateTotalDuration(totalLessons),
+			rating: calcRating === 'NaN' ? 0 : calcRating,
+			reviewCount: reviews.length,
+			purchasedStudents,
 		}
 
 		return data

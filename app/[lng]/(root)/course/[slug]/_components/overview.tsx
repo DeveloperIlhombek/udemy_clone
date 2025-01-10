@@ -1,10 +1,9 @@
 'use client'
 
 import { getCourseSections } from '@/actions/section.action'
-import { ICourse, ISection } from '@/app.types'
+import { ICourse, IReview, ISection } from '@/app.types'
 import ReviewCard from '@/components/cards/review.card'
 import { Accordion } from '@/components/ui/accordion'
-import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import useTranslate from '@/hooks/use-translate'
 import {
@@ -18,26 +17,36 @@ import {
 import { useEffect, useState } from 'react'
 import SectionList from './section-list'
 import SectionLoading from '@/components/shared/section-loading'
+import { getCourseReviews } from '@/actions/review.action'
+import AllReviews from './all-reviews'
 
 function Overview(course: ICourse) {
-	const [isLoading, setIsloading] = useState(true)
-	const [sections, setsections] = useState<ISection[]>([])
+	const [isLoading, setIsLoading] = useState(true)
+	const [sections, setSections] = useState<ISection[]>([])
+	const [reviews, setReviews] = useState<IReview[]>([])
 
 	const t = useTranslate()
 
 	useEffect(() => {
 		const getData = async () => {
 			try {
-				const res = await getCourseSections(course._id)
-				setsections(res)
-				setIsloading(false)
+				const [sections, reviews] = await Promise.all([
+					getCourseSections(course._id),
+					getCourseReviews(course._id, 6),
+				])
+				setSections(sections)
+				setReviews(reviews)
+				setIsLoading(false)
 			} catch (error) {
-				setIsloading(false)
+				setIsLoading(false)
 			}
 		}
+
 		getData()
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
+
 	return (
 		<>
 			<div className='mt-6 rounded-md bg-gradient-to-t from-background to-secondary p-4 lg:p-6'>
@@ -120,34 +129,30 @@ function Overview(course: ICourse) {
 				</div>
 			</div>
 
-			<div className='mt-8 flex flex-col pb-20'>
-				<div className='mt-6 flex items-center gap-1 font-space-grotesk text-xl'>
-					<Star className='fill-[#DD6B20] text-[#DD6B20]' />
-					<div className='font-medium'>
-						{t('reviewCourse')}: <span className='font-bold'>4.5</span>
+			{reviews.length ? (
+				<div className='mt-8 flex flex-col pb-20'>
+					<div className='mt-6 flex items-center gap-1 font-space-grotesk text-xl'>
+						<Star className='fill-[#DD6B20] text-[#DD6B20]' />
+						<div className='font-medium'>
+							{t('reviewCourse')}:{' '}
+							<span className='font-bold'>{course.rating}</span>
+						</div>
+						<Dot />
+						<div className='font-medium'>
+							<span className='font-bold'>{course.reviewCount}</span>
+							{t('review')}
+						</div>
 					</div>
-					<Dot />
-					<div className='font-medium'>
-						<span className='font-bold'>20</span>
-						{t('review')}
+
+					<div className='mt-5 grid grid-cols-1 gap-2 lg:grid-cols-2'>
+						{reviews.map(review => (
+							<ReviewCard key={review._id} review={review} />
+						))}
 					</div>
-				</div>
 
-				<div className='mt-5 grid grid-cols-1 gap-2 lg:grid-cols-2'>
-					<ReviewCard />
-					<ReviewCard />
-					<ReviewCard />
-					<ReviewCard />
+					{course.reviewCount > 6 && <AllReviews {...course} />}
 				</div>
-
-				<Button
-					size={'lg'}
-					rounded={'full'}
-					className='mx-auto mt-6 flex justify-center'
-				>
-					{t('viewAll')}
-				</Button>
-			</div>
+			) : null}
 		</>
 	)
 }

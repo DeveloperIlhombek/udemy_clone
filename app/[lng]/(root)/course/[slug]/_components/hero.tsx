@@ -32,14 +32,16 @@ function Hero(course: ICourse) {
 				</div>
 
 				<div className='flex items-center gap-2 font-space-grotesk'>
-					<p className='font-bold text-[#E59819]'>4.5</p>
-					<ReactStars value={4.5} edit={false} color2='#E59819' />
-					<p className='font-bold'>(199)</p>
+					<p className='font-bold text-[#E59819]'>{course.rating}</p>
+					<ReactStars value={course.rating} edit={false} color2='#E59819' />
+					<p className='font-bold'>({course.reviewCount})</p>
 				</div>
 
 				<div className='flex items-center gap-2'>
 					<PiStudentBold className='size-6' />
-					<p className='font-space-grotesk font-bold'>80 {t('students')}</p>
+					<p className='font-space-grotesk font-bold'>
+						{course.purchasedStudents} {t('students')}
+					</p>
 				</div>
 
 				<div className='flex items-center gap-2'>
