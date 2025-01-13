@@ -71,3 +71,10 @@ export const profileSchema = z.object({
 export const reviewSchema = z.object({
 	data: z.string(),
 })
+
+export const addressSchema = z.object({
+	fullName: z.string(),
+	address: z.string(),
+	city: z.string(),
+	zip: z.string(),
+})

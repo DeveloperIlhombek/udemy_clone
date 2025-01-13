@@ -8,7 +8,7 @@ interface Props extends ICourse {
 	quantity: number
 }
 function ShoppingCartCard(item: Props) {
-	const { removeFromCart, totalPrice } = useCart()
+	const { removeFromCart } = useCart()
 
 	return (
 		<div className='grid w-full grid-cols-3 gap-4 rounded-md p-4 shadow-md dark:shadow-sm dark:shadow-white max-md:grid-cols-1'>
@@ -57,7 +57,7 @@ function ShoppingCartCard(item: Props) {
 					</div>
 				</div> */}
 				<h1 className='font-space-grotesk text-xl font-bold max-md:hidden'>
-					{totalPrice().toLocaleString('en-US', {
+					{item.currentPrice.toLocaleString('en-US', {
 						style: 'currency',
 						currency: 'USD',
 					})}
