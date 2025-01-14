@@ -3,8 +3,6 @@ import Hero from './_components/hero'
 import Overview from './_components/overview'
 import Description from './_components/description'
 import { Separator } from '@/components/ui/separator'
-import { translation } from '@/i18n/server'
-import { getDetailedCourse, getFeaturedCourses } from '@/actions/course.action'
 import {
 	Carousel,
 	CarouselContent,
@@ -13,23 +11,28 @@ import {
 	CarouselPrevious,
 } from '@/components/ui/carousel'
 import CourseCard from '@/components/cards/course.card'
+import { translation } from '@/i18n/server'
+import {
+	getDetailedCourse,
+	getFeaturedCourses,
+	getIsPurchase,
+} from '@/actions/course.action'
 import { ICourse } from '@/app.types'
+import { auth } from '@clerk/nextjs'
 
 interface Props {
-	params: {
-		lng: string
-		slug: string
-	}
+	params: { lng: string; slug: string }
 }
 
 async function Page({ params: { lng, slug } }: Props) {
 	const { t } = await translation(lng)
-
+	const { userId } = auth()
 	const courseJSON = await getDetailedCourse(slug)
 	const coursesJSON = await getFeaturedCourses()
+	const isPurchase = await getIsPurchase(userId!, slug)
 
-	const courses = JSON.parse(JSON.stringify(coursesJSON))
 	const course = JSON.parse(JSON.stringify(courseJSON))
+	const courses = JSON.parse(JSON.stringify(coursesJSON))
 
 	return (
 		<>
@@ -42,7 +45,7 @@ async function Page({ params: { lng, slug } }: Props) {
 						<Overview {...course} />
 					</div>
 					<div className='col-span-1 max-lg:col-span-3'>
-						<Description {...course} />
+						<Description course={course} isPurchase={isPurchase} />
 					</div>
 				</div>
 

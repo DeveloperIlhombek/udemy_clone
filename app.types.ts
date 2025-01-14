@@ -77,3 +77,24 @@ export interface IReview {
 	course: ICourse
 	isFlag: boolean
 }
+
+export interface ICard {
+	id: string
+	billing_details: {
+		address: {
+			city: string
+			country: string
+			line1: string
+			line2: string
+			postal_code: string
+			state: string
+		}
+		name: string
+	}
+	card: {
+		brand: string
+		exp_month: number
+		exp_year: number
+		last4: string
+	}
+}

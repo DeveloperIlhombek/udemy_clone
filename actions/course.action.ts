@@ -358,3 +358,18 @@ export const addArchiveCourse = async (courseId: string, clerkId: string) => {
 		throw new Error('Something went wrong while adding favorite course!')
 	}
 }
+
+export const getIsPurchase = async (clerkId: string, courseId: string) => {
+	try {
+		await connectToDatabase()
+		const user = await User.findOne({ clerkId })
+		const isPurchased = await Purchase.findOne({
+			user: user._id,
+			course: courseId,
+		})
+
+		return !!isPurchased
+	} catch (error) {
+		throw new Error('Something went wrong while getting purchased courses!')
+	}
+}

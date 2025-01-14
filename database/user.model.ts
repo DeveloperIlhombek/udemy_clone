@@ -14,6 +14,7 @@ const UserSchema = new Schema(
 		linkedin: String,
 		github: String,
 		youtube: String,
+		customerId: String,
 		favouriteCourses: [{ type: Schema.Types.ObjectId, ref: 'Course' }],
 		archiveCourses: [{ type: Schema.Types.ObjectId, ref: 'Course' }],
 	},

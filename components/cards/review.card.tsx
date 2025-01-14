@@ -4,8 +4,8 @@ import ReactStars from 'react-stars'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { IReview } from '@/app.types'
 import { formatDistanceToNow } from 'date-fns'
-import { useParams } from 'next/navigation'
 import { getTimeLocale } from '@/lib/utils'
+import { useParams } from 'next/navigation'
 import useTranslate from '@/hooks/use-translate'
 
 function ReviewCard({ review }: { review: IReview }) {
