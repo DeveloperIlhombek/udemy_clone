@@ -16,14 +16,16 @@ function ReviewCard({ review }: { review: IReview }) {
 		<div className='mt-6 border-t border-t-secondary'>
 			<div className='mt-8 flex gap-2'>
 				<Avatar>
-					<AvatarImage src={review.user.picture} />
-					<AvatarFallback className='uppercase'>
+					{/* <AvatarImage src={review.user.picture} /> */}
+					{/* <AvatarFallback className='uppercase'>
 						{review.user.fullName[0]}
-					</AvatarFallback>
+					</AvatarFallback> */}
+					<h1>I</h1>
 				</Avatar>
 
 				<div className='flex flex-col'>
-					<div>{review.user.fullName}</div>
+					{/* <div>{review.user.fullName}</div> */}
+					<div>Ilhom</div>
 					<div className='flex items-center gap-1'>
 						<ReactStars value={review.rating} edit={false} color2='#DD6B20' />
 						<p className='text-sm opacity-50'>

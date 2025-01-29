@@ -1,11 +1,10 @@
 'use server'
-import { GetAllCoursesParams, GetCoursesParams, ICreateCourse } from './types.d'
 
 import Course from '@/database/course.model'
 import { connectToDatabase } from '@/lib/mongoose'
-import { revalidatePath } from 'next/cache'
-
+import { GetAllCoursesParams, GetCoursesParams, ICreateCourse } from './types'
 import { ICourse, ILesson } from '@/app.types'
+import { revalidatePath } from 'next/cache'
 import User from '@/database/user.model'
 import { cache } from 'react'
 import Section from '@/database/section.model'
@@ -23,7 +22,7 @@ export const createCourse = async (data: ICreateCourse, clerkId: string) => {
 		await Course.create({ ...data, instructor: user._id })
 		revalidatePath('/en/instructor/my-courses')
 	} catch (error) {
-		throw new Error('Something went wrong while creating course!')
+		throw new Error('Soething went wrong while creating course!')
 	}
 }
 
@@ -78,7 +77,7 @@ export const getCourseById = async (id: string) => {
 		const course = await Course.findById(id)
 		return course as ICourse
 	} catch (error) {
-		throw new Error('Something went wrong while getting by ID course!')
+		throw new Error('Soething went wrong while getting course!')
 	}
 }
 
@@ -92,7 +91,7 @@ export const updateCourse = async (
 		await Course.findByIdAndUpdate(id, updateData)
 		revalidatePath(path)
 	} catch (error) {
-		throw new Error('Something went wrong while updating course!')
+		throw new Error('Something went wrong while updating course status!')
 	}
 }
 
@@ -310,7 +309,6 @@ export const getDashboardCourse = async (clerkId: string, courseId: string) => {
 
 		return { course, sections, progressPercentage }
 	} catch (error) {
-		console.log(error)
 		throw new Error('Something went wrong while getting dashboard course!')
 	}
 }
@@ -359,6 +357,28 @@ export const addArchiveCourse = async (courseId: string, clerkId: string) => {
 	}
 }
 
+export const addWishlistCourse = async (courseId: string, clerkId: string) => {
+	try {
+		await connectToDatabase()
+		const isWhishlist = await User.findOne({
+			clerkId,
+			wishlistCourses: courseId,
+		})
+
+		if (isWhishlist) {
+			throw new Error('Course already added to archive')
+		}
+
+		const user = await User.findOne({ clerkId })
+
+		await User.findByIdAndUpdate(user._id, {
+			$push: { wishlistCourses: courseId },
+		})
+	} catch (error) {
+		throw new Error('Something went wrong while adding whishlist!')
+	}
+}
+
 export const getIsPurchase = async (clerkId: string, courseId: string) => {
 	try {
 		await connectToDatabase()
@@ -371,5 +391,84 @@ export const getIsPurchase = async (clerkId: string, courseId: string) => {
 		return !!isPurchased
 	} catch (error) {
 		throw new Error('Something went wrong while getting purchased courses!')
+	}
+}
+
+export const getProgressCourse = async (clerkId: string, courseId: string) => {
+	try {
+		await connectToDatabase()
+
+		const sections = await Section.find({ course: courseId }).populate({
+			path: 'lessons',
+			model: Lesson,
+			options: { sort: { order: 1 } },
+		})
+
+		const lessons = sections.map(section => section.lessons).flat()
+		const lessonIds = lessons.map(lesson => lesson._id)
+
+		const validCompletedLessons = await UserProgress.find({
+			userId: clerkId,
+			lessonId: { $in: lessonIds },
+			isCompleted: true,
+		})
+
+		const progressPercentage =
+			(validCompletedLessons.length / lessons.length) * 100
+
+		return progressPercentage
+	} catch (error) {
+		return 0
+	}
+}
+
+export const getStudentCourse = async (clerkId: string) => {
+	try {
+		await connectToDatabase()
+		const user = await User.findOne({ clerkId }).select('_id')
+
+		const purchasedCourses = await Purchase.find({ user: user._id }).populate({
+			path: 'course',
+			model: Course,
+			select: 'title price _id previewImage slug category currentPrice',
+		})
+
+		const courses = purchasedCourses.filter(el => el.course !== null)
+
+		const allCourses = []
+
+		for (const item of courses) {
+			const progress = await getProgressCourse(clerkId, item.course._id)
+			allCourses.push({ ...item._doc, progress })
+		}
+
+		const expenses = allCourses
+			.map(c => c.course.currentPrice)
+			.reduce((a, b) => a + b, 0)
+
+		return { allCourses, expenses }
+	} catch (error) {
+		throw new Error('Something went wrong while getting student courses!')
+	}
+}
+
+export const getWishlist = async (clerkId: string) => {
+	try {
+		await connectToDatabase()
+		const user = await User.findOne({ clerkId }).select('wishlistCourses')
+
+		const wishlistCourses = await Course.find({
+			_id: { $in: user.wishlistCourses },
+		})
+			.select('previewImage title slug oldPrice currentPrice instructor')
+			.populate({
+				path: 'instructor',
+				select: 'fullName picture',
+				model: User,
+			})
+
+		return wishlistCourses
+	} catch (error) {
+		throw new Error('Something went wrong while getting whishlist!')
 	}
 }

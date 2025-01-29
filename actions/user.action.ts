@@ -4,6 +4,8 @@ import { connectToDatabase } from '@/lib/mongoose'
 import { ICreateUser, IUpdateUser } from './types'
 import User from '@/database/user.model'
 import { revalidatePath } from 'next/cache'
+import Review from '@/database/review.model'
+import Course from '@/database/course.model'
 
 export const createUser = async (data: ICreateUser) => {
 	try {
@@ -35,18 +37,33 @@ export const updateUser = async (data: IUpdateUser) => {
 		const { clerkId, updatedData, path } = data
 		const updateduser = await User.findOneAndUpdate({ clerkId }, updatedData)
 		if (path) return revalidatePath(path)
-
 		return updateduser
 	} catch (error) {
 		throw new Error('Error updating user. Please try again.')
 	}
 }
 
-export const GetUserById = async (clerkId: string) => {
+export const getUserById = async (clerkId: string) => {
 	try {
 		await connectToDatabase()
 		return await User.findOne({ clerkId })
 	} catch (error) {
-		throw new Error('Error fetching user. Please try again !')
+		throw new Error('Error fetching user. Please try again.')
+	}
+}
+
+export const getUserReviews = async (clerkId: string) => {
+	try {
+		await connectToDatabase()
+		const user = await User.findOne({ clerkId }).select('_id')
+
+		const reviews = await Review.find({ user: user._id })
+			.sort({ createdAt: -1 })
+			.populate({ path: 'user', model: User, select: 'fullName picture' })
+			.populate({ path: 'course', model: Course, select: 'title' })
+
+		return reviews
+	} catch (error) {
+		throw new Error('Error getting user reviews')
 	}
 }
