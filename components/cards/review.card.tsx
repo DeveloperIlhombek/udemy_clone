@@ -1,7 +1,7 @@
 'use client'
 
 import ReactStars from 'react-stars'
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Avatar } from '../ui/avatar'
 import { IReview } from '@/app.types'
 import { formatDistanceToNow } from 'date-fns'
 import { getTimeLocale } from '@/lib/utils'
